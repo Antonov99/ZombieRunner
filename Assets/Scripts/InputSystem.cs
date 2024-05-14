@@ -1,15 +1,19 @@
+using System;
 using UnityEngine;
 
-public class InputController
+public class InputSystem
 {
-    public static bool tap, swipeLeft, swipeRight, swipeUp, swipeDown;
+    public event Action SwipeLeft;
+    public event Action SwipeRight;
+    public event Action SwipeUp;
+    public event Action SwipeDown;
+    
+    public static bool tap;
     private bool _isDragging;
     private Vector2 _startTouch, _swipeDelta;
 
     public void Update()
     {
-        tap = swipeDown = swipeUp = swipeLeft = swipeRight = false;
-
         #region ПК-версия
 
         if (Input.GetMouseButtonDown(0))
@@ -48,7 +52,7 @@ public class InputController
         _swipeDelta = Vector2.zero;
         if (_isDragging)
         {
-            if (Input.touches.Length <= 0)
+            if (Input.touches.Length < 0)
                 _swipeDelta = Input.touches[0].position - _startTouch;
             else if (Input.GetMouseButton(0))
                 _swipeDelta = (Vector2)Input.mousePosition - _startTouch;
@@ -61,16 +65,16 @@ public class InputController
             if (Mathf.Abs(x) > Mathf.Abs(y))
             {
                 if (x < 0)
-                    swipeLeft = true;
+                    SwipeLeft?.Invoke();
                 else
-                    swipeRight = true;
+                    SwipeRight?.Invoke();
             }
             else
             {
                 if (y < 0)
-                    swipeDown = true;
+                    SwipeDown?.Invoke();
                 else
-                    swipeUp = true;
+                    SwipeUp?.Invoke();
             }
 
             Reset();
