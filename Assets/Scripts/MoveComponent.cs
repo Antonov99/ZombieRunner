@@ -10,6 +10,12 @@ namespace DefaultNamespace
         
         [SerializeField] 
         private float moveSpeed;
+
+        [SerializeField] 
+        private float jumpStrength;
+
+        [SerializeField]
+        private float gravity;
         
         [SerializeField] 
         private float lineWidth;
@@ -20,7 +26,9 @@ namespace DefaultNamespace
 
         private String _direction;
 
-        private void Start()
+        private bool _isJumping;
+
+        private void Awake()
         {
             _movementDirection.z = moveSpeed;
         }
@@ -29,8 +37,25 @@ namespace DefaultNamespace
         {
             Vector3 offset = _movementDirection * Time.deltaTime;
             playerTransform.position += offset;
+            Gravity();
         }
-        
+
+        private void Gravity()
+        {
+            if (_isJumping)
+            {
+                _movementDirection.y -= gravity;
+                if (playerTransform.position.y <= 0)
+                {
+                    _isJumping=false;
+                    var position = playerTransform.position;
+                    position = new Vector3(position.x, 0, position.z);
+                    playerTransform.position = position;
+                    _movementDirection.y = 0;
+                }
+            }
+        }
+
         private void Swipe()
         {
             var position = playerTransform.position;
@@ -42,8 +67,6 @@ namespace DefaultNamespace
             else if (_direction == "right")
                 targetPosition += Vector3.right * lineWidth;
             playerTransform.position = targetPosition;
-
-            Debug.Log(_currentLine);
         }
         
         public void SwipeLeft()
@@ -68,6 +91,11 @@ namespace DefaultNamespace
 
         public void SwipeUp()
         {
+            if (!_isJumping)
+            {
+                _movementDirection.y = jumpStrength;
+                _isJumping = true;
+            }
         }
 
         public void SwipeDown()
