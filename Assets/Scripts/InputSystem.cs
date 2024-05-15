@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
+using Zenject;
 
-public class InputSystem
+public class InputSystem:ITickable
 {
     public event Action SwipeLeft;
     public event Action SwipeRight;
@@ -12,7 +13,7 @@ public class InputSystem
     private bool _isDragging;
     private Vector2 _startTouch, _swipeDelta;
 
-    public void Update()
+    public void Tick()
     {
         #region ПК-версия
 
