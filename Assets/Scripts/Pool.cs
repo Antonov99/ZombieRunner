@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 public sealed class Pool<T> where T : Object
 {
     [ShowInInspector]
-    private readonly Dictionary<T, List<T>> _objects;
+    private readonly Dictionary<string, List<T>> _objects;
 
     private readonly int _reservationAmount;
     private readonly T[] _prefabs;
@@ -18,7 +18,7 @@ public sealed class Pool<T> where T : Object
 
     public Pool(int reservationAmount, T[] prefabs, Transform parent)
     {
-        _objects = new Dictionary<T, List<T>>();
+        _objects = new Dictionary<string, List<T>>();
 
         _reservationAmount = reservationAmount;
         _prefabs = prefabs;
@@ -33,16 +33,18 @@ public sealed class Pool<T> where T : Object
     {
         foreach (var prefab in _prefabs)
         {
-            if (!_objects.ContainsKey(prefab))
+            if (!_objects.ContainsKey(prefab.name))
             {
-                _objects[prefab] = new List<T>();
+                _objects[prefab.name] = new List<T>();
             }
 
             for (int i = 0; i < _reservationAmount; i++)
             {
                 T obj = Object.Instantiate(prefab, _spawnPosition, _spawnRotation, _parent);
-
-                _objects[prefab].Add(obj);
+                
+                obj.name = obj.name.Replace("(Clone)","");
+                
+                _objects[prefab.name].Add(obj);
                 SetActive(obj, false);
             }
         }
@@ -50,30 +52,32 @@ public sealed class Pool<T> where T : Object
 
     public T Get(T prefab)
     {
-        if (!_objects.TryGetValue(prefab, out _))
+        if (!_objects.ContainsKey(prefab.name))
         {
-            _objects[prefab] = new List<T>();
+            _objects[prefab.name] = new List<T>();
         }
-
-        T obj = _objects[prefab].Count > 0
-            ? _objects[prefab][^1]
+        
+        T obj = _objects[prefab.name].Count > 0
+            ? _objects[prefab.name][^1]
             : Object.Instantiate(prefab, _spawnPosition, _spawnRotation, _parent);
 
         SetActive(obj, true);
-        _objects[prefab].Remove(obj);
+        _objects[prefab.name].Remove(obj);
 
         return obj;
     }
 
     public void Put(T obj)
     {
-        if (!_objects.TryGetValue(obj, out _))
+        obj.name = obj.name.Replace("(Clone)","");
+        
+        if (!_objects.ContainsKey(obj.name))
         {
-            _objects[obj] = new List<T>();
+            _objects[obj.name] = new List<T>();
         }
 
         SetActive(obj, false);
-        _objects[obj].Add(obj);
+        _objects[obj.name].Add(obj);
 
         if (_parent != null)
             SetParent(obj);

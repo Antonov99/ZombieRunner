@@ -21,6 +21,7 @@ public sealed class LocationManager : MonoBehaviour
     [ShowInInspector]
     private Pool<GameObject> pool;
 
+    [ShowInInspector]
     private readonly HashSet<GameObject> _activeTiles = new();
 
     [SerializeField]
@@ -49,15 +50,16 @@ public sealed class LocationManager : MonoBehaviour
         {
             var random = Random.Range(0, tiles.Length);
             var obj = pool.Get(tiles[random]);
-            if (obj != null)
+            
+            if (obj == null)
+                return;
+
+            if (_activeTiles.Add(obj))
             {
-                if (_activeTiles.Add(obj))
-                {
-                    _position = new Vector3(0, 0, _currentTile * tileLength);
-                    _currentTile++;
-                    obj.transform.position = _position;
-                    obj.GetComponent<Tile>().OnDestroy += Unspawn;
-                }
+                _position = new Vector3(0, 0, _currentTile * tileLength);
+                _currentTile++;
+                obj.transform.position = _position;
+                obj.GetComponent<Tile>().OnDestroy += Unspawn;
             }
         }
     }
@@ -69,7 +71,7 @@ public sealed class LocationManager : MonoBehaviour
             prefab.GetComponent<Tile>().OnDestroy -= Unspawn;
 
             pool.Put(prefab);
-            
+
             Spawn();
         }
     }

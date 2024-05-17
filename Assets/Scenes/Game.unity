@@ -312,7 +312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visibleTiles: 3
-  preloadAmount: 2
+  preloadAmount: 5
   tiles:
   - {fileID: 8137161284906707490, guid: 9eb8ccd31b0e34f41946a9e2404a938c, type: 3}
   - {fileID: 198104125961165933, guid: 4f58991045a54f04680a9af9cf7ec8b6, type: 3}
@@ -563,7 +563,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6313678394411855749, guid: 513f98523fe63c14fb4e5279f7808dce, type: 3}
       propertyPath: moveSpeed
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6313678394682893341, guid: 513f98523fe63c14fb4e5279f7808dce, type: 3}
       propertyPath: m_Name
