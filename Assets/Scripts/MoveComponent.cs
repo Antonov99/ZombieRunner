@@ -28,6 +28,8 @@ namespace DefaultNamespace
 
         private bool _isJumping;
 
+        private bool _isDead;
+
         private void Awake()
         {
             _movementDirection.z = moveSpeed;
@@ -35,6 +37,7 @@ namespace DefaultNamespace
         
         private void FixedUpdate()
         {
+            if(_isDead) return;
             Vector3 offset = _movementDirection * Time.deltaTime;
             playerTransform.position += offset;
             Gravity();
@@ -100,6 +103,11 @@ namespace DefaultNamespace
 
         public void SwipeDown()
         {
+        }
+
+        public void Dead()
+        {
+            _isDead = true;
         }
     }
 }

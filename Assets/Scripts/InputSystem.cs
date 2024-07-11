@@ -1,7 +1,9 @@
 using System;
+using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
 
+[UsedImplicitly]
 public class InputSystem:ITickable
 {
     public event Action SwipeLeft;
