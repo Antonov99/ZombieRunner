@@ -1,5 +1,5 @@
 ﻿using System;
-using DefaultNamespace;
+using Components;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
@@ -9,7 +9,7 @@ namespace Character
     [UsedImplicitly]
     public class CharacterMoveController : IInitializable, IDisposable
     {
-        private InputSystem _inputSystem;
+        private InputSystem.InputSystem _inputSystem;
 
         private GameObject _character;
         
@@ -18,22 +18,31 @@ namespace Character
         private CollisionHandler _collisionHandler;
 
         [Inject]
-        private void Construct(InputSystem inputSystem, PlayerService playerService, CollisionHandler collisionHandler)
+        private void Construct(InputSystem.InputSystem inputSystem, PlayerService playerService, CollisionHandler collisionHandler)
         {
             _inputSystem = inputSystem;
             _character = playerService.Character;
             _collisionHandler = collisionHandler;
+            
+            _moveComponent = _character.GetComponent<MoveComponent>();
         }
-        
-        public void Initialize()
+
+        void IInitializable.Initialize()
         {
             _inputSystem.SwipeLeft += SwipeLeft;
             _inputSystem.SwipeRight += SwipeRight;
             _inputSystem.SwipeUp += SwipeUp;
             _inputSystem.SwipeDown += SwipeDown;
             _collisionHandler.OnCollisionWithObstacle += OnCollisionWithObstacle;
-            
-            _moveComponent = _character.GetComponent<MoveComponent>();
+        }
+
+        void IDisposable.Dispose()
+        {
+            _inputSystem.SwipeLeft -= SwipeLeft;
+            _inputSystem.SwipeRight -= SwipeRight;
+            _inputSystem.SwipeUp -= SwipeUp;
+            _inputSystem.SwipeDown -= SwipeDown;
+            _collisionHandler.OnCollisionWithObstacle -= OnCollisionWithObstacle;
         }
 
         private void OnCollisionWithObstacle()
@@ -41,13 +50,6 @@ namespace Character
             _moveComponent.Dead();
         }
 
-        public void Dispose()
-        {
-            _inputSystem.SwipeLeft -= SwipeLeft;
-            _inputSystem.SwipeRight -= SwipeRight;
-            _inputSystem.SwipeUp -= SwipeUp;
-            _inputSystem.SwipeDown -= SwipeDown;
-        }
 
         private void SwipeLeft()
         {

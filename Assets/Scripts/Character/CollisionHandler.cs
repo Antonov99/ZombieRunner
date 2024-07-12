@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Character
 {
-    public class CollisionHandler : MonoBehaviour
+    public sealed class CollisionHandler : MonoBehaviour
     {
         public event Action OnCollisionWithObstacle;
         public event Action OnCollisionWithCollectible;

@@ -1,27 +1,30 @@
 ﻿using System;
+using Animators;
 using JetBrains.Annotations;
-using UnityEngine;
 using Zenject;
 
 namespace Character
 {
     [UsedImplicitly]
-    public class ObstacleCollisionObserver : IInitializable, IDisposable
+    public sealed class ObstacleCollisionObserver : IInitializable, IDisposable
     {
         private CollisionHandler _collisionHandler;
+        private GameManager.GameManager _gameManager;
+        private DeathAnimatorTrigger _deathAnimatorTrigger;
 
         [Inject]
-        public void Construct(CollisionHandler collisionHandler)
+        public void Construct(CollisionHandler collisionHandler, GameManager.GameManager gameManager, DeathAnimatorTrigger deathAnimatorTrigger)
         {
             _collisionHandler = collisionHandler;
+            _gameManager = gameManager;
+            _deathAnimatorTrigger = deathAnimatorTrigger;
         }
 
         void IInitializable.Initialize()
         {
             _collisionHandler.OnCollisionWithObstacle += OnCollisionWithObstacle;
         }
-
-
+        
         void IDisposable.Dispose()
         {
             _collisionHandler.OnCollisionWithObstacle -= OnCollisionWithObstacle;
@@ -29,7 +32,8 @@ namespace Character
         
         private void OnCollisionWithObstacle()
         {
-            Debug.Log("Udar");
+            _deathAnimatorTrigger.Death();
+            _gameManager.FinishGame();
         }
     }
 }
