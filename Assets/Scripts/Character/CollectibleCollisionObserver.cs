@@ -1,4 +1,5 @@
 ﻿using System;
+using Money;
 using JetBrains.Annotations;
 using UnityEngine;
 using Zenject;
@@ -9,11 +10,13 @@ namespace Character
     public sealed class CollectibleCollisionObserver : IInitializable, IDisposable
     {
         private CollisionHandler _collisionHandler;
+        private MoneyStorage _moneyStorage;
 
         [Inject]
-        public void Construct(CollisionHandler collisionHandler)
+        public void Construct(CollisionHandler collisionHandler, MoneyStorage moneyStorage)
         {
             _collisionHandler = collisionHandler;
+            _moneyStorage = moneyStorage;
         }
 
         void IInitializable.Initialize()
@@ -28,7 +31,7 @@ namespace Character
 
         private void OnCollisionWithCollectible()
         {
-            Debug.Log("Collect");
+            _moneyStorage.Add(1);
         }
     }
 }
