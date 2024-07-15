@@ -10,10 +10,10 @@ namespace Character
     public sealed class CollectibleCollisionObserver : IInitializable, IDisposable
     {
         private CollisionHandler _collisionHandler;
-        private MoneyStorage _moneyStorage;
+        private IMoneyStorage _moneyStorage;
 
         [Inject]
-        public void Construct(CollisionHandler collisionHandler, MoneyStorage moneyStorage)
+        public void Construct(CollisionHandler collisionHandler, IMoneyStorage moneyStorage)
         {
             _collisionHandler = collisionHandler;
             _moneyStorage = moneyStorage;
