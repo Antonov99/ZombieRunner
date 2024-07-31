@@ -4,15 +4,15 @@ using UnityEngine;
 namespace Money
 {
     [UsedImplicitly]
-    public sealed class MoneyStorage: IMoneyStorage
+    public sealed class MoneyStorage : IMoneyStorage
     {
         public int Money { get; private set; }
-        
+
         public MoneyStorage(int money)
         {
             Money = money;
         }
-        
+
         public bool CanSpend(int range)
         {
             return Money >= range;

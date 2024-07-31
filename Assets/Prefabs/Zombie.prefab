@@ -204,7 +204,7 @@ MonoBehaviour:
   moveSpeed: 5
   jumpStrength: 15
   gravity: 1
-  lineWidth: 4
+  lineWidth: 3.5
 --- !u!136 &5665233345162318005
 CapsuleCollider:
   m_ObjectHideFlags: 0

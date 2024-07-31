@@ -1,7 +1,6 @@
 using Character;
 using Animators;
 using Money;
-using UI;
 using UnityEngine;
 using Zenject;
 
@@ -14,7 +13,7 @@ public class GameInstaller : MonoInstaller
     private CollisionHandler collisionHandler;
 
     [SerializeField]
-    private int initialMoney=0;
+    private int initialMoney;
     
     public override void InstallBindings()
     {
@@ -30,7 +29,6 @@ public class GameInstaller : MonoInstaller
 
         //Managers
         Container.Bind<GameManager.GameManager>().AsSingle().NonLazy();
-        Container.BindInterfacesAndSelfTo<UIManager>().AsSingle().NonLazy();
         
         //Animations
         Container.BindInterfacesAndSelfTo<DeathAnimatorTrigger>().AsSingle().NonLazy();

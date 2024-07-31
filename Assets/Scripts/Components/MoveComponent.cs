@@ -33,7 +33,7 @@ namespace Components
         
         private void FixedUpdate()
         {
-            if(_isDead) return;
+            if(_isDead) _movementDirection=Vector3.zero;
             Vector3 offset = _movementDirection * Time.deltaTime;
             playerTransform.position += offset;
             Gravity();
