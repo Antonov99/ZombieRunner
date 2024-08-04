@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3582771986911913008}
   - component: {fileID: 6506016278415679533}
   - component: {fileID: 4720970062499511759}
+  - component: {fileID: -4305925317832729814}
   m_Layer: 0
   m_Name: Pumpkin1
   m_TagString: Collectible
@@ -48,7 +49,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!136 &4720970062499511759
 CapsuleCollider:
@@ -64,6 +65,19 @@ CapsuleCollider:
   m_Height: 0.47
   m_Direction: 1
   m_Center: {x: -0.03, y: 0, z: 0}
+--- !u!114 &-4305925317832729814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380232443786567347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8d1ac9c3d8477982c229ef538514f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amount: 1
 --- !u!1001 &1137430254653007023
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3,24 +3,25 @@ using UnityEngine;
 
 namespace Components
 {
-    public class MoveComponent:MonoBehaviour
+    public class MoveComponent : MonoBehaviour
     {
         [SerializeField]
         private Transform playerTransform;
-        
-        [SerializeField] 
+
+        [SerializeField]
         private float moveSpeed;
 
-        [SerializeField] 
+        [SerializeField]
         private float jumpStrength;
 
         [SerializeField]
         private float gravity;
-        
-        [SerializeField] 
+
+        [SerializeField]
         private float lineWidth;
-        
+
         private ushort _currentLine = 1;
+        
         private Vector3 _movementDirection;
         private String _direction;
         private bool _isJumping;
@@ -30,10 +31,11 @@ namespace Components
         {
             _movementDirection.z = moveSpeed;
         }
-        
+
         private void FixedUpdate()
         {
-            if(_isDead) _movementDirection=Vector3.zero;
+            if (_isDead) return;
+
             Vector3 offset = _movementDirection * Time.deltaTime;
             playerTransform.position += offset;
             Gravity();
@@ -46,7 +48,7 @@ namespace Components
                 _movementDirection.y -= gravity;
                 if (playerTransform.position.y <= 0)
                 {
-                    _isJumping=false;
+                    _isJumping = false;
                     var position = playerTransform.position;
                     position = new Vector3(position.x, 0, position.z);
                     playerTransform.position = position;
@@ -57,7 +59,7 @@ namespace Components
 
         private void Swipe()
         {
-            if(_isDead) return;
+            if (_isDead) return;
             var position = playerTransform.position;
             Vector3 targetPosition = position.z * playerTransform.forward +
                                      position.y * playerTransform.up +
@@ -68,7 +70,7 @@ namespace Components
                 targetPosition += Vector3.right * lineWidth;
             playerTransform.position = targetPosition;
         }
-        
+
         public void SwipeLeft()
         {
             if (_currentLine > 0)
@@ -100,6 +102,8 @@ namespace Components
 
         public void SwipeDown()
         {
+            if (playerTransform.position.y > 0)
+                _movementDirection.y = -jumpStrength;
         }
 
         public void Dead()

@@ -1,6 +1,7 @@
 using Character;
 using Animators;
 using Money;
+using UI.GameScene;
 using UnityEngine;
 using Zenject;
 
@@ -32,6 +33,13 @@ public class GameInstaller : MonoInstaller
         
         //Animations
         Container.BindInterfacesAndSelfTo<DeathAnimatorTrigger>().AsSingle().NonLazy();
+        
+        //View
+        Container.
+            Bind<IMoneyPresenter>().
+            To<MoneyPresenter>().
+            AsSingle().
+            NonLazy();
 
         //Etc CORE
         Container.

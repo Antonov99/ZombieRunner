@@ -6,17 +6,18 @@ namespace Character
     public sealed class CollisionHandler : MonoBehaviour
     {
         public event Action OnCollisionWithObstacle;
-        public event Action OnCollisionWithCollectible;
+        public event Action<GameObject> OnCollisionWithCollectible;
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.CompareTag("Obstacle"))
+            var obj = collision.gameObject;
+            
+            if (obj.CompareTag("Obstacle"))
                 OnCollisionWithObstacle?.Invoke();
 
-            if (collision.gameObject.CompareTag("Collectible"))
+            if (obj.CompareTag("Collectible"))
             {
-                OnCollisionWithCollectible?.Invoke();
-                Destroy(collision.gameObject);
+                OnCollisionWithCollectible?.Invoke(obj);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Collectibles;
 using Money;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -29,9 +30,9 @@ namespace Character
             _collisionHandler.OnCollisionWithCollectible -= OnCollisionWithCollectible;
         }
 
-        private void OnCollisionWithCollectible()
+        private void OnCollisionWithCollectible(GameObject obj)
         {
-            _moneyStorage.Add(1);
+            if (obj.TryGetComponent(out ICollectible collectible)) collectible.Collect(_moneyStorage);
         }
     }
 }

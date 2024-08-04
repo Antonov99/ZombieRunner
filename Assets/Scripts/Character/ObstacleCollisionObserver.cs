@@ -13,7 +13,11 @@ namespace Character
         private DeathAnimatorTrigger _deathAnimatorTrigger;
 
         [Inject]
-        public void Construct(CollisionHandler collisionHandler, GameManager.GameManager gameManager, DeathAnimatorTrigger deathAnimatorTrigger)
+        public void Construct(
+            CollisionHandler collisionHandler, 
+            GameManager.GameManager gameManager, 
+            DeathAnimatorTrigger deathAnimatorTrigger
+            )
         {
             _collisionHandler = collisionHandler;
             _gameManager = gameManager;

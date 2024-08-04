@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Levels
 {
-
     public class Tile : MonoBehaviour
     {
         [SerializeField]

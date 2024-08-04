@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ec2e830c594a3b85bc3c224632df43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unspawnDistance: -9
+  unspawnDistance: -5
 --- !u!1 &892534059176923335
 GameObject:
   m_ObjectHideFlags: 0
@@ -3057,7 +3057,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3582771986911913008, guid: b1f6e1efecb45de4a9d270286fc7a3c5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.630637
+      value: -4.233
       objectReference: {fileID: 0}
     - target: {fileID: 3582771986911913008, guid: b1f6e1efecb45de4a9d270286fc7a3c5, type: 3}
       propertyPath: m_LocalRotation.w
