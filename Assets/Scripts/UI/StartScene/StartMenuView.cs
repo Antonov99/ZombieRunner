@@ -14,16 +14,18 @@ namespace UI.StartScene
         [SerializeField]
         private Button exitButton;
 
-        private SceneLoader _sceneLoader;
-
         [FormerlySerializedAs("scene")]
         [SerializeField]
         private string nameOfSceneToNavigate;
 
+        private SceneLoader _sceneLoader;
+        private GameManager.GameManager _gameManager;
+
         [Inject]
-        public void Construct(SceneLoader sceneLoader)
+        public void Construct(SceneLoader sceneLoader, GameManager.GameManager gameManager)
         {
             _sceneLoader = sceneLoader;
+            _gameManager = gameManager;
         }
 
         private void Awake()
@@ -35,6 +37,7 @@ namespace UI.StartScene
         private void LoadGame()
         {
             _sceneLoader.LoadScene(nameOfSceneToNavigate);
+            _gameManager.StartGame();
         }
 
         private void QuitGame()

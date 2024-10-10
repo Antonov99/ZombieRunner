@@ -11,6 +11,12 @@ public class GameInstaller : MonoInstaller
     private PlayerService playerService;
 
     [SerializeField]
+    private MoneyView moneyView;
+
+    [SerializeField]
+    private GameOverMenuView gameOverMenuView;
+    
+    [SerializeField]
     private CollisionHandler collisionHandler;
 
     [SerializeField]
@@ -27,9 +33,6 @@ public class GameInstaller : MonoInstaller
         Container.Bind<CollisionHandler>().FromInstance(collisionHandler).AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<ObstacleCollisionObserver>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<CollectibleCollisionObserver>().AsSingle().NonLazy();
-
-        //Managers
-        Container.Bind<GameManager.GameManager>().AsSingle().NonLazy();
         
         //Animations
         Container.BindInterfacesAndSelfTo<DeathAnimatorTrigger>().AsSingle().NonLazy();
@@ -39,6 +42,13 @@ public class GameInstaller : MonoInstaller
             Bind<IMoneyPresenter>().
             To<MoneyPresenter>().
             AsSingle().
+            WithArguments(moneyView).
+            NonLazy();
+        
+        Container.
+            BindInterfacesAndSelfTo<GameOverMenuPresenter>().
+            AsSingle().
+            WithArguments(gameOverMenuView).
             NonLazy();
 
         //Etc CORE

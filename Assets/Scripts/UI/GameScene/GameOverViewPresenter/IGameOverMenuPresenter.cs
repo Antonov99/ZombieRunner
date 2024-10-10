@@ -1,6 +1,6 @@
 ﻿namespace UI.GameScene
 {
-    public interface IMoneyPresenter
+    public interface IGameOverMenuPresenter
     {
         
     }

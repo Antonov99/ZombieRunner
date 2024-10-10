@@ -1,6 +1,6 @@
-﻿using Money;
+﻿using Audio;
+using Money;
 using UnityEngine;
-using Zenject;
 
 namespace Collectibles
 {
@@ -14,6 +14,7 @@ namespace Collectibles
             moneyStorage.Add(amount);
             gameObject.SetActive(false);
             Invoke(nameof(Activate),2);
+            AudioManager.Instance.PlayCollectSound();
         }
 
         private void Activate()

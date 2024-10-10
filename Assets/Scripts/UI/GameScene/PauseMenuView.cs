@@ -5,7 +5,7 @@ using Zenject;
 
 namespace UI.GameScene
 {
-    public class InterfaceView : MonoBehaviour
+    public class PauseMenuView : MonoBehaviour
     {
         [SerializeField]
         private Button pauseButton;
@@ -22,11 +22,13 @@ namespace UI.GameScene
         private GameObject _pauseButtonGameObject;
 
         private SceneLoader _sceneLoader;
+        private GameManager.GameManager _gameManager;
 
         [Inject]
-        public void Construct(SceneLoader sceneLoader)
+        public void Construct(SceneLoader sceneLoader, GameManager.GameManager gameManager)
         {
             _sceneLoader = sceneLoader;
+            _gameManager = gameManager;
         }
 
         private void Awake()
@@ -46,6 +48,7 @@ namespace UI.GameScene
         private void ExitGame()
         {
             _sceneLoader.LoadScene("StartMenu");
+            _gameManager.ExitMenu();
         }
 
         private void PauseGame()
@@ -53,6 +56,7 @@ namespace UI.GameScene
             SetActive(_pauseButtonGameObject,false);
             SetActive(pauseMenu,true);
             Time.timeScale = 0;
+            _gameManager.PauseGame();
         }
         
         private void ResumeGame()
@@ -60,6 +64,7 @@ namespace UI.GameScene
             SetActive(_pauseButtonGameObject,true);
             SetActive(pauseMenu,false);
             Time.timeScale = 1;
+            _gameManager.ResumeGame();
         }
         
         private void SetActive(GameObject obj, bool value)
@@ -67,7 +72,7 @@ namespace UI.GameScene
             obj.SetActive(value);    
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             pauseButton.onClick.RemoveListener(PauseGame);
             resumeButton.onClick.RemoveListener(ResumeGame);
